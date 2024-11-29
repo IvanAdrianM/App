@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<h1>Projects</h1>
+
+{% for project in projects %}
+
+<article class="card">
+    <a href="{% url 'project_detail' project.id %}">
+        <h1>{{ project.name }}</h1>
+    </a>
+
+    <!-- Mostrar estado del proyecto -->
+    {% if project.hecho %}
+        <p>Estado: <strong>✅ Hecho</strong></p>
+    {% else %}
+        <p>Estado: ⏲ Pendiente</p>
+
+        <!-- Botón para marcar como hecho -->
+        <form method="POST" action="{% url 'marcar_proyecto_hecho' project.id %}">
+            {% csrf_token %}
+            <button type="submit" class="button is-success">Marcar como Hecho ✅</button>
+        </form>
+    {% endif %}
+
+    <!-- Botón para eliminar el proyecto -->
+    <form method="POST" action="{% url 'eliminar_proyecto' project.id %}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este proyecto?');">
+        {% csrf_token %}
+        <button type="submit" class="button is-danger">Borrar 🗑</button>
+    </form>
+</article>
+
+{% endfor %}
+
+{% endblock %}

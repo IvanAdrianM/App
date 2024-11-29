@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="title">{{ titulo }}</h1>
+
+    <div class="logo-container">
+        <img src="{% static 'logo.jpg' %}" alt="Logo" width="100" class="logo">
+    </div>
+
+    <p class="welcome-text">
+        Aquí podrás registrar <span class="highlight">tus proyectos</span> y sus respectivas tareas para completarlos. <br> 
+        <strong>¡Bienvenido a <span class="brand-name">ProjectGO</span>!</strong>
+    </p>
+</div>
+
+{% endblock %}
+
+<style>
+/* Importar Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Estilos generales */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #2a2a2a;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Título */
+.title {
+    font-size: 2.8rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Imagen del logo */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    border-radius: 10%;
+    border: 3px solid #007bff;
+}
+
+/* Texto de bienvenida */
+.welcome-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #d1d1d1;
+}
+
+/* Estilizar palabras clave */
+.highlight {
+    color: #00d1b2;
+    font-weight: bold;
+}
+
+.brand-name {
+    color: #007bff;
+    font-weight: bold;
+}
+</style>

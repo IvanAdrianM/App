@@ -1,0 +1,70 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<h1>Tasks</h1>
+
+{% for task in tasks %}
+<div>
+    <h2>{% if task.hecho == False %} ⏲ {% else %} ✅ {% endif %}  {{ task.title }}</h2>
+
+    {% if task.hecho == False %}
+        <p>Tarea pendiente</p>
+    {% else %}
+        <p>Tarea realizada</p>
+    {% endif %}
+
+    <p>{{ task.description }}</p>
+    <p>Projecto: {{ task.project.name }}</p>
+
+    <button onclick="eliminarTarea({{ task.id }})">Borrar 🗑</button>
+    {% if task.hecho == False %}
+        <button onclick="marcarHecho({{ task.id }})">Hecho ✅</button>
+    {% endif %}
+</div>
+{% endfor %}
+
+<script>
+// Función para eliminar una tarea
+function eliminarTarea(taskId) {
+    fetch(`/eliminar-tarea/${taskId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.mensaje) {
+            alert(data.mensaje);
+            location.reload();  // Recargar la página después de eliminar la tarea
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Función para marcar una tarea como completada
+function marcarHecho(taskId) {
+    fetch(`/marcar-completada/${taskId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.mensaje) {
+            alert(data.mensaje);
+            location.reload();  // Recargar la página para reflejar el cambio
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
+{% endblock %}
